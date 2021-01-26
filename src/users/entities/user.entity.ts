@@ -5,7 +5,9 @@ import { CommonEntity } from 'src/common/entities/common.entity';
 import { BeforeUpdate, Column, Entity } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
-@ObjectType()
+@InputType({ isAbstract: true })
+@ObjectType() //자동으로 schema를 build 하기위해 사용하는 graphql decorator
+@Entity() //Entity for typeORM
 export class User extends CommonEntity {
   @Field(() => String)
   @IsEmail()
