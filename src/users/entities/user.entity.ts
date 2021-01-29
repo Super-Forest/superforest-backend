@@ -2,7 +2,7 @@ import { InternalServerErrorException } from '@nestjs/common';
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { IsBoolean, IsEmail, IsString } from 'class-validator';
 import { CommonEntity } from 'src/common/entities/common.entity';
-import { BeforeUpdate, Column, Entity } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 @InputType({ isAbstract: true })
@@ -10,20 +10,21 @@ import * as bcrypt from 'bcrypt';
 @Entity() //Entity for typeORM
 export class User extends CommonEntity {
   @Field(() => String)
-  @IsEmail()
   @Column()
+  @IsEmail()
   email: string;
 
   @Field(() => String)
+  @Column({ select: false })
   @IsString()
-  @Column()
   password: string;
 
-  @Field(() => Boolean, { defaultValue: true })
+  @Field(() => Boolean)
+  @Column({ default: false })
   @IsBoolean()
-  @Column()
   emailVerified: boolean;
 
+  @BeforeInsert()
   @BeforeUpdate()
   async hashPassword(): Promise<void> {
     try {

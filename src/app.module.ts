@@ -12,6 +12,7 @@ import { User } from './users/entities/user.entity';
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
+      ignoreEnvFile: process.env.NODE_ENV === 'prod',
       validationSchema: Joi.object({
         // use Joi to validate schema
         // NODE_ENV: Joi.string().valid('dev', 'prod', 'test').required(),
@@ -28,7 +29,7 @@ import { User } from './users/entities/user.entity';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      synchronize: true,
+      synchronize: process.env.NODE_ENV !== 'prod',
       logging: true,
       entities: [User],
     }),
