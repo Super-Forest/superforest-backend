@@ -8,5 +8,5 @@ export class LoginInPut extends PickType(User, ['email', 'password']) {}
 @ObjectType()
 export class LoginOutPut extends CoreOutPut {
   @Field(() => String, { nullable: true })
-  token: string;
+  token?: string;
 }

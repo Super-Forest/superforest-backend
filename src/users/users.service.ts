@@ -40,7 +40,12 @@ export class UsersService {
     password,
   }: LoginInPut): Promise<{ ok: boolean; error?: string; token?: string }> {
     try {
-      const user = await this.users.findOne({ email });
+      const user = await this.users.findOne(
+        { email },
+        {
+          select: ['id', 'password'],
+        },
+      );
       if (!user) {
         return {
           ok: false,
