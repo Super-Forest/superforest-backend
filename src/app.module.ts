@@ -2,10 +2,11 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import * as Joi from 'joi';
-import { UsersModule } from './users/users.module';
+import { UsersModule } from './user/user.module';
 import { CommonModule } from './common/common.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users/entities/user.entity';
+import { User as UserEntity } from './user/entities/user.entity';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -30,16 +31,15 @@ import { User } from './users/entities/user.entity';
       database: process.env.DB_NAME,
       synchronize: true,
       logging: true,
-      entities: [User],
+      entities: [UserEntity],
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
-      // context: ({ req }) => ({}),
     }),
     UsersModule,
     CommonModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule {}

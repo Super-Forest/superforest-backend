@@ -1,0 +1,23 @@
+type User {
+  id: ID!
+  createdAt: Date!
+  updatedAt: Date!
+  email: String!
+  emailVerified: Boolean!
+  password: String!
+}
+
+type Auth {
+  email: String!
+  token: String!
+}
+
+type Query {
+  users(page: Int): [User!]
+  user(email: String!): User
+}
+
+type Mutation {
+  login(email: String!, password: String!): Auth
+  signUp(email: String!, password: String!): Auth
+}
