@@ -13,6 +13,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/entities/user.entity';
 import { JwtModule } from './jwt/jwt.module';
 import { JwtMiddleware } from './jwt/jwt.middleware';
+import { PostsModule } from './posts/posts.module';
+import { Post } from './posts/entities/post.entity';
 
 @Module({
   imports: [
@@ -39,7 +41,7 @@ import { JwtMiddleware } from './jwt/jwt.middleware';
       database: process.env.DB_NAME,
       synchronize: process.env.NODE_ENV !== 'prod',
       logging: true,
-      entities: [User],
+      entities: [User, Post],
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
@@ -52,6 +54,7 @@ import { JwtMiddleware } from './jwt/jwt.middleware';
     JwtModule.forRoot({
       privateKey: process.env.JWT_SECRET_KEY,
     }),
+    PostsModule,
   ],
   controllers: [],
   providers: [],
