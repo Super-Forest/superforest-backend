@@ -13,12 +13,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/entities/user.entity';
 import { JwtModule } from './jwt/jwt.module';
 import { JwtMiddleware } from './jwt/jwt.middleware';
-<<<<<<< HEAD
 import { PostsModule } from './posts/posts.module';
 import { Post } from './posts/entities/post.entity';
-=======
 import { AuthModule } from './auth/auth.module';
->>>>>>> 7c4afec... feat: add auth guard
 
 @Module({
   imports: [
@@ -58,11 +55,8 @@ import { AuthModule } from './auth/auth.module';
     JwtModule.forRoot({
       privateKey: process.env.JWT_SECRET_KEY,
     }),
-<<<<<<< HEAD
     PostsModule,
-=======
     AuthModule,
->>>>>>> 7c4afec... feat: add auth guard
   ],
   controllers: [],
   providers: [],

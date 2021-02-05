@@ -9,10 +9,10 @@ export class PostsService {
   constructor(
     @InjectRepository(Post) private readonly posts: Repository<Post>,
   ) {}
-  async createPost({
+  async createPost(
     userId,
-    content,
-  }: CreatePostInPut): Promise<{ ok: boolean; error?: string }> {
+    { content }: CreatePostInPut,
+  ): Promise<{ ok: boolean; error?: string }> {
     try {
       await this.posts.save(this.posts.create({ userId, content }));
       return {
