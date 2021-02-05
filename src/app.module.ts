@@ -50,7 +50,7 @@ import { JwtMiddleware } from './jwt/jwt.middleware';
     UsersModule,
     CommonModule,
     JwtModule.forRoot({
-      privateKey: process.env.SECRET_KEY,
+      privateKey: process.env.JWT_SECRET_KEY,
     }),
   ],
   controllers: [],
