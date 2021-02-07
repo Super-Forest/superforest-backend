@@ -2,7 +2,8 @@ import { InternalServerErrorException } from '@nestjs/common';
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { IsBoolean, IsEmail, IsString } from 'class-validator';
 import { CommonEntity } from 'src/common/entities/common.entity';
-import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
+import { Post } from 'src/posts/entities/post.entity';
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 @InputType({ isAbstract: true })
@@ -23,6 +24,10 @@ export class User extends CommonEntity {
   @Column({ default: false })
   @IsBoolean()
   emailVerified: boolean;
+
+  @Field(() => [Post])
+  @OneToMany(() => Post, (post) => post.writer)
+  posts: Post[];
 
   @BeforeInsert()
   @BeforeUpdate()

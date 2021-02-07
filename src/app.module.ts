@@ -15,6 +15,7 @@ import { JwtModule } from './jwt/jwt.module';
 import { JwtMiddleware } from './jwt/jwt.middleware';
 import { PostsModule } from './posts/posts.module';
 import { Post } from './posts/entities/post.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { Post } from './posts/entities/post.entity';
       privateKey: process.env.JWT_SECRET_KEY,
     }),
     PostsModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
