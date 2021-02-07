@@ -20,6 +20,6 @@ export class PostsResolver {
     @AuthUser() user,
     @Args('input') createPostInput: CreatePostInPut,
   ): Promise<CreatePostOutPut> {
-    return this.postService.createPost(user.id, createPostInput);
+    return this.postService.createPost(user, createPostInput);
   }
 }

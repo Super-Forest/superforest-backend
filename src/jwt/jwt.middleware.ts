@@ -27,8 +27,8 @@ export class JwtMiddleware implements NestMiddleware {
         const decoded = this.jwtService.verify(token.toString());
         if (
           typeof decoded === 'object' &&
-          decoded.hasOwnProeperty('id') &&
-          decoded.hasOwnProeperty('expiredTime')
+          decoded.hasOwnProperty('id') &&
+          decoded.hasOwnProperty('expiredTime')
         ) {
           const { id, expiredTime } = decoded;
           if (!this.checkIsTokenExpired(expiredTime)) {

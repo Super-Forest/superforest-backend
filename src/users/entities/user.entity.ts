@@ -1,8 +1,9 @@
 import { InternalServerErrorException } from '@nestjs/common';
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
-import { IsBoolean, IsEmail, IsString, IsNumber } from 'class-validator';
+import { IsBoolean, IsEmail, IsString } from 'class-validator';
 import { CommonEntity } from 'src/common/entities/common.entity';
-import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
+import { Post } from 'src/posts/entities/post.entity';
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 @InputType({ isAbstract: true })
@@ -24,7 +25,10 @@ export class User extends CommonEntity {
   @IsBoolean()
   emailVerified: boolean;
 
-  likeCount: number;
+  @Field(() => [Post])
+  @OneToMany(() => Post, (post) => post.writer)
+  posts: Post[];
+
   @BeforeInsert()
   @BeforeUpdate()
   async hashPassword(): Promise<void> {
