@@ -1,12 +1,16 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { Post } from './entities/post.entity';
+import { UseGuards } from '@nestjs/common';
+
 import { PostsService } from './posts.service';
+
+import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthUser } from 'src/auth/auth-user.decorator';
+
 import { CreatePostInPut, CreatePostOutPut } from './dtos/createPost.dto';
 import { AllPostsOutPut } from './dtos/allPosts.dto';
 import { PostInPut, PostOutput } from './dtos/post.dto';
-import { UseGuards } from '@nestjs/common';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { AuthUser } from 'src/auth/auth-user.decorator';
+import { UpdatePostInPut, UpdatePostOutPut } from './dtos/updatePost.dto';
+import { DeletePostInPut, DeletePostOutPut } from './dtos/deletePost.dto';
 
 @Resolver()
 export class PostsResolver {
@@ -29,5 +33,23 @@ export class PostsResolver {
     @Args('input') createPostInput: CreatePostInPut,
   ): Promise<CreatePostOutPut> {
     return this.postService.createPost(user, createPostInput);
+  }
+
+  @Mutation(() => UpdatePostOutPut)
+  @UseGuards(AuthGuard)
+  async updatePost(
+    @AuthUser() user,
+    @Args('input') updatePostInput: UpdatePostInPut,
+  ): Promise<UpdatePostOutPut> {
+    return this.postService.updatePost(user, updatePostInput);
+  }
+
+  @Mutation(() => DeletePostOutPut)
+  @UseGuards(AuthGuard)
+  async deletePost(
+    @AuthUser() user,
+    @Args('input') deletePostInput: DeletePostInPut,
+  ) {
+    return this.postService.deletePost(user, deletePostInput);
   }
 }
